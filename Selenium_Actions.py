@@ -9,9 +9,14 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import ChromeOptions
+
+Options = ChromeOptions()
+Options.add_argument("start-maximized")
+Options.add_argument("disable-infobars")
 
 xpath_App_Sec = '//*[@id="footer-sitemap-policy-content-content"]/div/ul/li[1]/a'
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(chrome_options=Options,executable_path="WebDriver/chromedriver_235")
 
 driver.get('https://google.com')
 time.sleep(5)
