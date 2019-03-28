@@ -32,14 +32,17 @@ print (Elem_footer.parent)
 Elem_footer.location_once_scrolled_into_view
 loc_x,loc_y =Elem_footer.location.values()
 link_lst = Elem_footer.get_attribute("innerText").splitlines()
-for link in link_lst:
+for xx,link in enumerate(link_lst,start=1):
     try:    
         link_element =driver.find_element_by_link_text(link)
         ActionChains(driver).key_down(Keys.CONTROL).click(link_element).key_up(Keys.CONTROL).perform()
         time.sleep(3)
+        win_list = driver.window_handles
+        driver.switch_to.window(win_list[xx])
+        time.sleep(3)
         driver.switch_to.window(main_win[0])
         WebDriverWait(driver,10).until(EC.new_window_is_opened)
-        driver.execute_script("window.open(www.bseindia.com)")
+#         driver.execute_script("window.open(www.bseindia.com)")
     except Exception as e:
         print(e.args,"\n","****-----"*14)
         

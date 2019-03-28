@@ -67,6 +67,8 @@ def Script_input():
     driver.find_element_by_xpath('//*[@class="search"]/input[@id="keyword"]').clear()
     driver.find_element_by_xpath('//*[@class="search"]/input[@id="keyword"]').send_keys("Shantigear")
     driver.set_page_load_timeout(4)
+    Alert =driver.switch_to.alert
+    Alert.text()
     time.sleep(3)
 
 def Result_gen(self):
