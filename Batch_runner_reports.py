@@ -1,15 +1,22 @@
 import unittest
 import HtmlTestRunner
-from NSE_Test_Report import *
 
-class TestStringMethods(unittest.TestCase):
+
+class StringMethods(unittest.TestCase):
 
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
 
     def test_isupper(self):
         self.assertTrue('FOO'.isupper())
+        print("1st statement\n\t")
         self.assertFalse('Foo'.isupper())
+        print("This as been passed in isupper\n")
+        print("second statement")
+    def test_ValuePass(self):
+        self.assertGreaterEqual(9,7, "True")
+        print("Step pass")
+        pass
 
     def test_split(self):
         s = 'hello world'
@@ -23,4 +30,7 @@ class TestStringMethods(unittest.TestCase):
         map
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='C:/Users/vkhoday/eclipse-workspace/Pyunit_Selenium/Reports'))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='../Pyunit_Selenium/Reports', report_title="Functional Testing", report_name="TestExecution"))
+    
+    
+    

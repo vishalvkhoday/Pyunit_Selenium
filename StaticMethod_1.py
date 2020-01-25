@@ -7,7 +7,7 @@ import os
 import  datetime
 import random
 from selenium.common.exceptions import ElementClickInterceptedException
-import allure
+# import allure
 import pytest
 import socket
 # for i in range(1,5):

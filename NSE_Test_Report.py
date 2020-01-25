@@ -10,7 +10,6 @@ from HtmlTestRunner.result import TestResult
 import time
 import logging
 import os
-import HTMLTestRunner
 from Test_3 import login
 import Test_3 
 from selenium.webdriver.common.keys import Keys
@@ -32,7 +31,7 @@ class TestNseDataExt(unittest.TestCase):
         login()
         logging.info('Setup function successfully executed')
 #         unittest.TestResult.addSuccess(self,"Login successfully")
-        HTMLTestRunner.TestResult.addSuccess(self,"Login Successfull!!!")
+        res1=HTMLTestRunner.TestResult.addSuccess(self,"Login Successfull!!!")
         HtmlTestRunner.result.TestResult.addSuccess(self,"Login Successful")
         time.sleep(1)
         pass

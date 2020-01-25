@@ -22,6 +22,7 @@ xpath_footer ='//*[@id="quicklinkdiv"]'
 options = webdriver.ChromeOptions()
 options.add_argument("start-maximized")
 options.add_argument("disable-infobars")
+
 driver = webdriver.Chrome(chrome_options=options,executable_path='WebDriver/chromedriver_235')
 Actions = ActionChains(driver)
 driver.get('https://www.bseindia.com')
@@ -46,7 +47,6 @@ for xx,link in enumerate(link_lst,start=1):
     except Exception as e:
         print(e.args,"\n","****-----"*14)
         
-    
 time.sleep(4)
 
 

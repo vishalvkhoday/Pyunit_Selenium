@@ -35,8 +35,7 @@ class Grid2(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-if __name__ == "__main__":
-    
+if __name__ == "__main__":    
     args = sys.argv   
     port  = args[1]
     platform  = args[2]

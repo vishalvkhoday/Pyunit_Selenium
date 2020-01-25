@@ -11,13 +11,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import  ElementNotVisibleException
 import time
  
  
 options = webdriver.ChromeOptions()
 options.add_argument("start-maximized")
 options.add_argument("disable-infobars")
-driver = webdriver.Chrome(chrome_options=options,executable_path="WebDriver/chromedriver_235")
+driver = webdriver.Chrome(chrome_options=options,executable_path="WebDriver/chromedriver_235", service_args=["--verbose", "--log-path=WebDriver/qc1.log","w+"])
 actions = ActionChains(driver)
  
 driver.get("https://www.google.com")
@@ -25,7 +26,7 @@ driver.implicitly_wait(10)
 driver.maximize_window()
 winHanl = driver.window_handles
 xpath_scrtxt = '//*[@id="form_topsearch"]/input[@id="search_str"]'
-
+# xpath_scrtxt = '//*[@id="form_topsearch"]/input[@id="search_str"]'
 for win in winHanl:
     driver.switch_to_window(win)
     driver.execute_script("window.open('https://www.moneycontrol.com')")
