@@ -48,6 +48,3 @@ for xx,link in enumerate(link_lst,start=1):
         print(e.args,"\n","****-----"*14)
         
 time.sleep(4)
-
-
-
