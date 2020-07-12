@@ -1,7 +1,6 @@
 
-
 select scr,round(avg(Hi),2) Hi,round(Avg(lw),2) Lw,round((avg(Hi) + Avg(lw))/2,2) Avg_HnL,round(sqrt(avg(Hi) * Avg(lw)),2)Sqrt_HnL,
-round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2 pvtpoint,ne.[Close]Cls ,s.Sector from (
+round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2 pvtpoint,ne.[Close]Cls ,s.Sector,iss.Index_Name from (
 select Script_Name scr,max([High])Hi,Min([Low])Lw from NSE_EOD where Trnx_date > = (
 select top 1 trnx from (
 select distinct top 120  Trnx_date  trnx from NSE_EOD
@@ -40,8 +39,10 @@ and ne.Script_Name like '%%'
 and ne.[close] > 10
 inner join Sector s on 
 s.Script_Name =ne.Script_Name
-group by scr,ne.[Close],s.Sector
-having ne.[Close] between (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2) -(round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2)*0.05
-and (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2) +(round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2)*0.05
+inner join Index_Stock iss ON
+ne.Script_Name = iss.Script_Name
+group by scr,ne.[Close],s.Sector,iss.Index_Name
+having ne.[Close] between (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2) -(round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2)*0.075
+and (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2) +(round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2)*0.075
 --having ne.[Close] >=round((avg(Hi) + Avg(lw))/2,2) 
 order by 1
