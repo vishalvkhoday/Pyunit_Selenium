@@ -45,4 +45,3 @@ having ne.[Close] between (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw
 and (round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2) +(round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2)*0.05
 --having ne.[Close] >=round((avg(Hi) + Avg(lw))/2,2) 
 order by 1
-
