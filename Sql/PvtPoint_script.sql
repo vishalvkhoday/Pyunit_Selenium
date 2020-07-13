@@ -35,18 +35,21 @@ select distinct top 30  Trnx_date  trnx from NSE_EOD
 order by Trnx_date desc
 ) as T1 order by 1 
 )group by Script_Name
-
 ) as T2  inner join NSE_EOD ne on 
 ne.Script_Name =T2.scr
-
 and ne.Script_Name like '%%'
 --and ne.[close] > 10
 and ne.Trnx_date = (select max(Trnx_date) from NSE_EOD)
 inner join Sector s on 
 s.Script_Name =ne.Script_Name
-inner join Index_Stock iss ON
+left outer join Index_Stock iss ON
 ne.Script_Name = iss.Script_Name
-and iss.Index_Name = 'Nifty50'
+and iss.Index_Name like'%Nifty500%'
+
+--inner join Index_Stock iss on
+--and iss.Index_Name is null
+
 group by scr,ne.[Close],s.Sector,iss.Index_Name
-having ne.[Close] < round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) +((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2)
+--having ne.[Close] between round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) -((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2)
+--and  round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) +((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2)
 order by 1
