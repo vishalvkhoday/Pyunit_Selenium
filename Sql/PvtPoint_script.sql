@@ -1,14 +1,16 @@
 
 
+
+
 select scr,round(avg(Hi),2) Hi,round(Avg(lw),2) Lw,round((avg(Hi) + Avg(lw))/2,2) Avg_HnL,round(sqrt(avg(Hi) * Avg(lw)),2)Sqrt_HnL,
 round(((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)),2)/2 pvtpoint,
 round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) +((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2) pvt_UpRange,
  day60H.Day60High pvt_UpRange1,
 round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) -((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2) pvt_LowRange,
 Day60L.Day60Low pvt_DownRange1,
-ne.[Close]Cls ,s.Sector,iss.Index_Name 
+ne.[Close]Cls,ne.Volume LastVol ,avg(Avg_Vol) Avg_vol,s.Sector,iss.Index_Name 
 from (
-select Script_Name scr,max([High])Hi,Min([Low])Lw from NSE_EOD where Trnx_date > = (
+select Script_Name scr,max([High])Hi,Min([Low])Lw,AVG(Volume) Avg_Vol from NSE_EOD where Trnx_date > = (
 select top 1 trnx from (
 select distinct top 120  Trnx_date  trnx from NSE_EOD
 order by Trnx_date desc
@@ -16,7 +18,7 @@ order by Trnx_date desc
 ) group by Script_Name
 union all
 
-select Script_Name scr,max([High])Hi,Min([Low])Lw from NSE_EOD where Trnx_date > = (
+select Script_Name scr,max([High])Hi,Min([Low])Lw,AVG(Volume) Avg_Vol from NSE_EOD where Trnx_date > = (
 select top 1 trnx from (
 select distinct top 90  Trnx_date  trnx from NSE_EOD
 order by Trnx_date desc
@@ -24,7 +26,7 @@ order by Trnx_date desc
 )group by Script_Name
 union all
 
-select Script_Name scr,max([High])Hi,Min([Low])Lw from NSE_EOD where Trnx_date > = (
+select Script_Name scr,max([High])Hi,Min([Low])Lw,AVG(Volume) Avg_Vol from NSE_EOD where Trnx_date > = (
 select top 1 trnx from (
 select distinct top 60  Trnx_date  trnx from NSE_EOD
 order by Trnx_date desc
@@ -32,7 +34,7 @@ order by Trnx_date desc
 )group by Script_Name
 union all
 
-select Script_Name scr,max([High])Hi,Min([Low])Lw  from NSE_EOD where Trnx_date > = (
+select Script_Name scr,max([High])Hi,Min([Low])Lw,AVG(Volume)Avg_Vol  from NSE_EOD where Trnx_date > = (
 select top 1 trnx from (
 select distinct top 30  Trnx_date  trnx from NSE_EOD
 order by Trnx_date desc
@@ -55,12 +57,13 @@ where ne1.Trnx_date >= (select top 1 Trnx_date from (select distinct top 60 Trnx
 group by ne1.Script_Name
 )as Day60L on 
 ne.Script_Name = Day60L.Script_Name
+
 left outer join Index_Stock iss ON
 --inner join Index_Stock iss on
 ne.Script_Name = iss.Script_Name
 and iss.Index_Name like '%Nifty50%'
 --and iss.Index_Name ='Nifty50'
-group by scr,ne.[Close],s.Sector,iss.Index_Name,Day60High,Day60Low
+group by scr,ne.[Close],s.Sector,iss.Index_Name,Day60High,Day60Low,ne.Volume
 --having ne.[Close] > round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) +((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2)
 --and  round(((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2) +((((avg(Hi) + Avg(lw))/2) + sqrt(avg(Hi) * Avg(lw)))/2)*0.075,2)
 order by 1
