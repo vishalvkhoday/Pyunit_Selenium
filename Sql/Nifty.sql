@@ -44,3 +44,5 @@ ne.Script =T2.scr
 and ne.Trnx_date = (select max(Trnx_date) from Nifty)
 group by scr,ne.[Close],ne.Trnx_date
 order by 8 desc
+
+--insert into Nifty values('NIFTY50','2020-07-29','11276.90','11341.40','11149.75','11202.85','11300.55','3872602')
