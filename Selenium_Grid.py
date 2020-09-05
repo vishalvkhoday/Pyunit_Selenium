@@ -32,8 +32,8 @@ class Selenium2TestingBot(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
         status = sys.exc_info() == (None, None, None)
-        tb_client = TestingBotClient('key', 'secret')
-        tb_client.tests.update_test(self.driver.session_id, self._testMethodName, status)
+#         tb_client = TestingBotClient('key', 'secret')
+#         tb_client.tests.update_test(self.driver.session_id, self._testMethodName, status)
 
 if __name__ == '__main__':
     unittest.main()
